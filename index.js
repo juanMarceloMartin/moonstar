@@ -69,6 +69,8 @@ function setPosts() {
                         articleBody.innerText = posts[i].body;
 
                         displayComments(posts[i].comments);
+
+                        window.scrollTo(0, 0);
                     }
 
                     card.addEventListener('click', fillArticle)
@@ -137,6 +139,7 @@ function postComment() {
 function goToHomePage() {
     container.classList.remove('d-none');
     articleContainer.classList.add('d-none');
+    window.scrollTo(0, 0);
 };
 
 document.querySelector('.logo').addEventListener('click', goToHomePage);
