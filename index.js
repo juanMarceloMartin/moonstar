@@ -6,12 +6,17 @@ let clickedPostId;
 const articleContainer = document.querySelector('.article-container');
 const commentsContainer = document.querySelector('.comments-container');
 
+const author = document.getElementById('author');
+const comment = document.querySelector('.comment-box');
+
 const articleTitle = document.querySelector('.article-title');
 const articleImage = document.querySelector('.article-image');
 const articleBody = document.querySelector('.article-body');
 
 const postCommentInput = document.getElementById('comment');
 const commentDate = document.querySelector('.comment-date');
+
+const warning = document.getElementById('warning');
 
 const date = new Date();
 
@@ -99,37 +104,47 @@ const methods = {
         };
     },
     postNewComment: () => {
-        const author = document.getElementById('author');
-        const comment = document.querySelector('.comment-box');
-
-        const commentAuthor = document.createElement('div');
-        const commentDate = document.createElement('div');
-        const authorComment = document.createElement('div');
-
-        commentAuthor.setAttribute('class', 'comment-author');
-        commentDate.setAttribute('class', 'comment-date')
-        authorComment.setAttribute('class', 'comment-body');
-
-        author.value ? commentAuthor.innerText = author.value : commentAuthor.innerText = "Unknown";
-        commentDate.innerText = date.toDateString();
-        authorComment.innerText = comment.value;
-
-        commentsContainer.append(commentAuthor);
-        commentsContainer.append(commentDate);
-        commentsContainer.append(authorComment);
-
-        const newComment = {
-            postId: clickedPostId,
-            id: posts[clickedPostId].comments[posts[clickedPostId].comments.length - 1].id + 1,
-            name: author.value,
-            body: comment.value,
-            email: `${name}@mail.com`
-        };
-
-        posts[clickedPostId].comments.push(newComment);
-
-        author.value = '';
-        comment.value = '';
+        if (!comment.value) {
+            warning.innerText = "Please write a comment before posting.";
+            warning.classList.remove('fade');
+            warning.classList.add('warning');
+        } else {
+            if (comment.value.length < 141) {
+                const commentAuthor = document.createElement('div');
+                const commentDate = document.createElement('div');
+                const authorComment = document.createElement('div');
+    
+                commentAuthor.setAttribute('class', 'comment-author');
+                commentDate.setAttribute('class', 'comment-date')
+                authorComment.setAttribute('class', 'comment-body');
+    
+                commentAuthor.innerText = author.value || "Unknown";
+                commentDate.innerText = date.toDateString();
+                authorComment.innerText = comment.value;
+    
+                commentsContainer.append(commentAuthor);
+                commentsContainer.append(commentDate);
+                commentsContainer.append(authorComment);
+    
+                const newComment = {
+                    postId: clickedPostId,
+                    id: posts[clickedPostId].comments[posts[clickedPostId].comments.length - 1].        id + 1,
+                    name: author.value,
+                    body: comment.value,
+                    email: `${name}@mail.com`
+                };
+            
+                posts[clickedPostId].comments.push(newComment);
+            
+                warning.classList.add('fade');
+    
+                author.value = '';
+                comment.value = '';
+                setTimeout(() => {
+                    warning.innerText = '';
+                }, 500);
+            }
+        }   
     },
     goToHomePage: () => {
         container.classList.remove('d-none');
@@ -137,13 +152,21 @@ const methods = {
         commentsContainer.innerHTML = '';
         window.scrollTo(0, 0);
     }
+};
+
+comment.oninput = () => {
+    if (comment.value.length > 140) {
+        let charactersOverTheLimit = comment.value.length - 140;
+        warning.innerText = `Your comment can't have more than 140 characters. Your are over ${charactersOverTheLimit} now`;
+        warning.classList.remove('fade');
+        warning.classList.add('warning')
+    } else {
+        warning.classList.add('fade');
+        setTimeout(() => {
+            warning.innerText = '';
+        }, 200);
+        
+    }
 }
 
-document.querySelector('.logo').addEventListener('click', methods.goToHomePage);
-
-postCommentInput.addEventListener('click', methods.postNewComment);
-
 methods.setPosts();
-
-
-

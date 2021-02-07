@@ -9,8 +9,11 @@
     <title>Beach Blog</title>
 </head>
 <body>
+    <div class="page-container">
+
+    
     <nav> 
-        <span class="logo">
+        <span class="logo" onclick="methods.goToHomePage()">
             <img src="./assets/palm.jpg" alt="">
             <h1>Beach Blog</h1>
         </span>  
@@ -27,14 +30,16 @@
         <div class="leave-comment-container">
             <h2>Leave a Comment</h2>
             <textarea placeholder="Leave a comment..." class="comment-box"></textarea>
+            <div class="fade" id="warning"></div>
             <p>
                 <input class="author" type="text" name="" id="author" placeholder="Name">
             </p>
             <p>
-                <input class="comment-submit" type="submit" name="" id="comment" value="Post my Comment">
-            </p>    
+                <input onclick="methods.postNewComment()" class="comment-submit" type="submit" name="" id="comment" value="Post my Comment">
+            </p>   
         </div>
     </div>
     <footer> Beach Blog - Marcelo's Front End Challenge</footer>
+</div>
 </body>
 </html>
