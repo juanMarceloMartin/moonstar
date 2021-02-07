@@ -9,6 +9,21 @@ const commentsContainer = document.querySelector('.comments-container');
 const author = document.getElementById('author');
 const comment = document.querySelector('.comment-box');
 
+comment.oninput = () => {
+    if (comment.value.length > 140) {
+        let charactersOverTheLimit = comment.value.length - 140;
+        warning.innerText = `Your comment can't have more than 140 characters. Your are over ${charactersOverTheLimit} now`;
+        warning.classList.remove('fade');
+        warning.classList.add('warning')
+    } else {
+        warning.classList.add('fade');
+        setTimeout(() => {
+            warning.innerText = '';
+        }, 200);
+        
+    }
+}
+
 const articleTitle = document.querySelector('.article-title');
 const articleImage = document.querySelector('.article-image');
 const articleBody = document.querySelector('.article-body');
@@ -153,20 +168,5 @@ const methods = {
         window.scrollTo(0, 0);
     }
 };
-
-comment.oninput = () => {
-    if (comment.value.length > 140) {
-        let charactersOverTheLimit = comment.value.length - 140;
-        warning.innerText = `Your comment can't have more than 140 characters. Your are over ${charactersOverTheLimit} now`;
-        warning.classList.remove('fade');
-        warning.classList.add('warning')
-    } else {
-        warning.classList.add('fade');
-        setTimeout(() => {
-            warning.innerText = '';
-        }, 200);
-        
-    }
-}
 
 methods.setPosts();
