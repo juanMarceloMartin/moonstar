@@ -1,7 +1,7 @@
 Moonstar Challenge
 ==================
 
-Taks
+Task
 ----
 * Write a short page showing posts and comments using the following api:
 https://jsonplaceholder.typicode.com
