@@ -13,4 +13,4 @@ Approach
 Out of these three APIs a single object is created for each post, with all the information it requires. Each post object is pushed into a posts array. This posts array is what the front end uses to display information.
 I did this to recreate the data manipulation a back end would do, so that the front end only has to access one endpoint.
 * The number of posts was limited to 10 to keep the page light.
-* Each new comment made by the user is push into that post's comments array. This way if the user goes back to the landing page and then clicks again on that same post, the new comment will remain.
+* Each new comment made by the user is pushed into that post's comments array. This way if the user goes back to the landing page and then clicks again on that same post, the new comment will remain.
