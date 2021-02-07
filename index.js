@@ -12,15 +12,9 @@ const comment = document.querySelector('.comment-box');
 comment.oninput = () => {
     if (comment.value.length > 140) {
         let charactersOverTheLimit = comment.value.length - 140;
-        warning.innerText = `Your comment can't have more than 140 characters. Your are over ${charactersOverTheLimit} now`;
-        warning.classList.remove('fade');
-        warning.classList.add('warning')
+        methods.displayWarning(`Your comment can't have more than 140 characters. Your are over ${charactersOverTheLimit} now`);
     } else {
-        warning.classList.add('fade');
-        setTimeout(() => {
-            warning.innerText = '';
-        }, 200);
-        
+        methods.removeWarning();  
     }
 }
 
@@ -118,11 +112,20 @@ const methods = {
             commentsContainer.append(commentBody);
         };
     },
+    displayWarning: message => {
+        warning.innerText = message;
+        warning.classList.remove('fade');
+        warning.classList.add('warning');
+    },
+    removeWarning: () => {
+        warning.classList.add('fade');
+        setTimeout(() => {
+            warning.innerText = '';
+        }, 500);
+    },
     postNewComment: () => {
         if (!comment.value) {
-            warning.innerText = "Please write a comment before posting.";
-            warning.classList.remove('fade');
-            warning.classList.add('warning');
+            methods.displayWarning("Please write a comment before posting.")
         } else {
             if (comment.value.length < 141) {
                 const commentAuthor = document.createElement('div');
@@ -150,14 +153,11 @@ const methods = {
                 };
             
                 posts[clickedPostId].comments.push(newComment);
-            
-                warning.classList.add('fade');
+
+                methods.removeWarning();
     
                 author.value = '';
                 comment.value = '';
-                setTimeout(() => {
-                    warning.innerText = '';
-                }, 500);
             }
         }   
     },
